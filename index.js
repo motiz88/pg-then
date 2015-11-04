@@ -1,15 +1,19 @@
+
 'use strict';
 
-let pg = require('pg');
-let slice = [].slice;
+const pg = require('pg');
+const slice = [].slice;
 
-exports.Client = Client;
-exports.Pool = Pool;
-exports.pg = pg;
+module.exports = {
+  Client,
+  Pool,
+  pg
+}
 
 /**
  * Pool
  */
+
 function Pool(config) {
   if (!(this instanceof Pool)) {
     return new Pool(config);
