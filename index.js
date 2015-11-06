@@ -42,8 +42,6 @@ Pool.prototype.connect = function () {
       self._client = client;
       self._done = done;
 
-      delete self._connect;
-
       resolve();
     });
   });
