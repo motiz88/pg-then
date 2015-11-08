@@ -23,40 +23,29 @@ function Pool(config) {
 }
 
 Pool.prototype.connect = function () {
-  if (this.connection) {
-    return Promise.resolve(this.connection);
-  }
+  const self = this;
 
-  if (this._connect) {
-    return this._connect;
-  }
-
-  let self = this;
-
-  this._connect = new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     pg.connect(self.config, function(error, client, done) {
       if (error) {
-        return reject(error);
+        done(error);
+        reject(error);
+        return;
       }
 
-      self._client = client;
-      self._done = done;
-
-      resolve();
+      resolve({ client, done });
     });
   });
-
-  return this._connect;
 }
 
 Pool.prototype.query = function() {
-  let args = slice.call(arguments);
-  let self = this;
+  const args = slice.call(arguments);
+  const self = this;
 
-  return this.connect().then(function () {
+  return this.connect().then(function (pool) {
     return new Promise(function(resolve, reject) {
-      let cb = function(error, result) {
-        self._done();
+      const cb = function(error, result) {
+        pool.done();
 
         if (error) {
           reject(error);
@@ -64,9 +53,10 @@ Pool.prototype.query = function() {
           resolve(result);
         }
       };
+
       args.push(cb);
 
-      self._client.query.apply(self._client, args);
+      pool.client.query.apply(pool.client, args);
     });
   });
 };
