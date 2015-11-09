@@ -1,3 +1,4 @@
+
 [![NPM version][npm-img]][npm-url]
 [![Build status][travis-img]][travis-url]
 [![Test coverage][coveralls-img]][coveralls-url]
@@ -20,25 +21,27 @@ $ npm install pg-then
 * [Client pooling](https://github.com/brianc/node-postgres#client-pooling)
 
 ```js
-let pg = require('pg-then')
+const pg = require('pg-then')
 
-let pool = pg.Pool('postgres://username:password@localhost/database')
+const pool = pg.Pool('postgres://username:password@localhost/database')
 
-pool.query('SELECT ...')
-.then(...)
-.catch(...)
+pool
+  .query('SELECT ...')
+  .then(...)
+  .catch(...)
 ```
 
 * [Client instance](https://github.com/brianc/node-postgres#client-instance)
 
 ```js
-let pg = require('pg-then')
+const pg = require('pg-then')
 
-let client = pg.Client('postgres://username:password@localhost/database')
+const client = pg.Client('postgres://username:password@localhost/database')
 
-client.query('SELECT ...')
-.then(...)
-.catch(...)
+client
+  .query('SELECT ...')
+  .then(...)
+  .catch(...)
 
 // ...
 

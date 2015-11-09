@@ -22,11 +22,9 @@ function Pool(config) {
   this.config = config
 }
 
-Pool.prototype.connect = function () {
-  const self = this
-
-  return new Promise(function (resolve, reject) {
-    pg.connect(self.config, function(error, client, done) {
+Pool.prototype.connect = function() {
+  return new Promise((resolve, reject) => {
+    pg.connect(this.config, (error, client, done) => {
       if (error) {
         done(error)
         reject(error)
@@ -40,11 +38,10 @@ Pool.prototype.connect = function () {
 
 Pool.prototype.query = function() {
   const args = slice.call(arguments)
-  const self = this
 
-  return this.connect().then(function (pool) {
-    return new Promise(function(resolve, reject) {
-      const cb = function(error, result) {
+  return this.connect().then((pool) => {
+    return new Promise((resolve, reject) => {
+      const cb = (error, result) => {
         pool.done()
 
         if (error) {
@@ -70,7 +67,7 @@ function Client(config) {
   }
 
   this._client = new pg.Client(config)
-  this._client.connect(function(error) {
+  this._client.connect((error) => {
     if (error) {
       throw error
     }
@@ -78,20 +75,20 @@ function Client(config) {
 }
 
 Client.prototype.query = function() {
-  let args = slice.call(arguments)
-  let self = this
+  const args = slice.call(arguments)
 
-  return new Promise(function(resolve, reject) {
-    let cb = function(error, result) {
+  return new Promise((resolve, reject) => {
+    const cb = (error, result) => {
       if (error) {
         reject(error)
       } else {
         resolve(result)
       }
     }
+
     args.push(cb)
 
-    self._client.query.apply(self._client, args)
+    this._client.query.apply(this._client, args)
   })
 }
 
