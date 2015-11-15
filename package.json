@@ -1,6 +1,6 @@
 {
   "name": "pg-then",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "pg-then: use pg by promise",
   "main": "index.js",
   "scripts": {
