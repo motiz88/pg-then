@@ -31,6 +31,16 @@ pool
   .catch(...)
 ```
 
+* [Use QueryStream](https://github.com/brianc/node-pg-query-stream)
+
+```js
+pg.Pool(config)
+  .stream('SELECT ...')
+  .on('data', data => ...)
+  .on('end', () => ...)
+  .on('error', err => ...)
+```
+
 * [Client instance](https://github.com/brianc/node-postgres#client-instance)
 
 ```js
