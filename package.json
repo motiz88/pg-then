@@ -12,9 +12,6 @@
     "test-travis": "istanbul cover node_modules/.bin/_mocha --report lcovonly -- -R dot -t 5000 test/*.js"
   },
   "repository": "coderhaoxin/pg-then",
-  "files": [
-    "index.js"
-  ],
   "keywords": [
     "postgre",
     "promise",
